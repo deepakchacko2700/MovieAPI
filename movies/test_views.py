@@ -48,15 +48,17 @@ class TestCollectionAPI:
     @pytest.fixture(autouse=True)
     def setup(self):
         self.client = APIClient()
+        self.user = UserFactory.create()
+        self.client.force_authenticate(user=self.user)
 
     def test_create_collection(self):
-        # Create movie fixtures
-        movie1 = MovieFactory.create()
-        movie2 = MovieFactory.create()
+        # Create  fixtures
+        collection = CollectionFactory()
+        movie1 = MovieFactory.create(collection=collection)
+        movie2 = MovieFactory.create(collection=collection)
 
         # Create collection data with associated movies
         collection_data = {
-            "uuid": '1234-fdfdd-343',
             "title": "My Collection",
             "description": "A collection of movies",
             "movies": [
@@ -76,13 +78,14 @@ class TestCollectionAPI:
         # Fetch all collections
         response = self.client.get('/collection/')
         assert response.status_code == status.HTTP_200_OK
-        assert len(response.data['collections']) == 2
-        assert response.data['collections'][0]['title'] == collection1.title
-        assert response.data['collections'][1]['title'] == collection2.title
+        print(response.data['data'])
+        assert len(response.data['data']['collections']) == 2
+        assert response.data['data']['collections'][0]['title'] == collection1.title
+        assert response.data['data']['collections'][1]['title'] == collection2.title
 
     def test_update_collection(self):
         collection = CollectionFactory.create(title="Old Title")
-        movie = MovieFactory.create(title="Movie Title")
+        movie = MovieFactory.create(title="Movie Title", collection=collection)
 
         update_data = {
             "title": "Updated Title",
@@ -108,4 +111,5 @@ class TestCollectionAPI:
     def test_reset_request_count(self):
         response = self.client.post('/request-count/reset/')
         assert response.status_code == status.HTTP_200_OK
-        assert response.data["message"] == "request count reset successfully"
+        response_data = response.json()
+        assert response_data["message"] == "request count reset successfully"

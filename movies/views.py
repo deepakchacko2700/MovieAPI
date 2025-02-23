@@ -83,12 +83,11 @@ class CollectionViewSet(GenericViewSet):
         serializer = CollectionSerializer(instance, data=request.data)
         if serializer.is_valid():
             updated_collection = serializer.save()
-            return Response(Response({
+            return Response({
                 'title': updated_collection.title,
                 'description': updated_collection.description,
                 'movies': serializer.data['movies']
             }, status=status.HTTP_200_OK)
-            )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):

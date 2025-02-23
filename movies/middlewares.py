@@ -2,7 +2,7 @@ import redis
 from django.http import JsonResponse
 from django.utils.deprecation import MiddlewareMixin
 
-r = redis.StrictRedis(host='172.26.169.218', port=6379, db=0, decode_responses=True) # redis connection
+r = redis.StrictRedis(host='127.0.0.1', port=6379, db=0, decode_responses=True) # redis connection
 
 
 class RequestCounterMiddleware(MiddlewareMixin):
