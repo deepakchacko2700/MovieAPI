@@ -1,0 +1,48 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.env/
+*.env
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+media/
+static/
+
+# Django secret key and settings file (don't track sensitive data)
+*.sqlite3
+*.log
+secret_key.txt
+settings_local.py
+
+# Pytest and other testing tools
+*.coveragerc
+.coverage
+nosetests.xml
+pytest_cache/
+*.hypothesis/
+
+# IDE and Editor settings (add more depending on your editor)
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS-specific files
+.DS_Store  # macOS
+Thumbs.db  # Windows
+
+# Docker
+docker-compose.override.yml
+
+# Any other files you may not want to track
+*.bak
+*.swp
